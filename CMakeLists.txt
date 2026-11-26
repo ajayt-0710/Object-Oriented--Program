@@ -6,12 +6,15 @@ project(Object_Oriented_Program)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find every C++ file
-file(GLOB CPP_FILES CONFIGURE_DEPENDS
+# Find all C++ files in the project and subfolders
+file(GLOB_RECURSE CPP_FILES CONFIGURE_DEPENDS
         "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
 
-# Create one executable per C++ file
+# Exclude generated build folders
+list(FILTER CPP_FILES EXCLUDE REGEX "/cmake-build[^/]*/")
+
+# Create one executable for every C++ file
 foreach(FILE_PATH IN LISTS CPP_FILES)
 
     get_filename_component(FILE_NAME "${FILE_PATH}" NAME_WE)
